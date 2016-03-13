@@ -1,4 +1,5 @@
 # NYBestsellers
+
 ## Description
 This is an iOS app that fetches the latest books bestseller profiles from the New York Times Books RESTful API. It stores the results locally on the client in Core Data, which can be viewed when offline. It offers an option to select a books category from 24 different categories ranked per category. The book profiles are displayed by rank and they show the book title, author and the book image. Selecting a book takes you to a view that shows all the information about that book. Images are downloaded once and cached locally to significantly improve the response of the tableviews.
 
