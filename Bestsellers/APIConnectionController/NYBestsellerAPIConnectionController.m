@@ -21,11 +21,10 @@
     return [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
 }
 
-- (void) setupLocalClientDatabase
+- (void) setupLocalClientDatabaseForAPI:(NSURL *)APIbaseURL
 {
     // Initialize RestKit using API base address
-    NSURL * baseURL = [NSURL URLWithString:@"http://api.nytimes.com"];
-    RKObjectManager * objectManager = [RKObjectManager managerWithBaseURL:baseURL];
+    RKObjectManager * objectManager = [RKObjectManager managerWithBaseURL:APIbaseURL];
     
     // Initialize Core Data's managed object model from the bundle
     NSManagedObjectModel * managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
@@ -102,9 +101,14 @@
 
 - (void)requestDataForItemsCategory:(NSString *) category success:(void (^)(void))successBlock failure:(void (^)(NSError *error))failureBlock
 {
-    NSDictionary * apiKeyData = [[NSUserDefaults standardUserDefaults] objectForKey:@"apiKeyData"];
-    NSString * apiKey = [apiKeyData objectForKey:@"apiKeyData"];
-    NSString * requestPath = [[NSString alloc] initWithFormat:@"/svc/books/v3/lists/%@?&api-key=%@",category, apiKey];
+    NSDictionary *APIConfig = [[NSUserDefaults standardUserDefaults] objectForKey:@"APIConfig"];
+    NSString *APIKey = [APIConfig objectForKey:@"APIKey"];
+    NSString *APIBooksPath = [APIConfig objectForKey:@"APIBooksExtension"];
+    NSString *APIBaseURL = [APIConfig objectForKey:@"APIBaseURL"];
+    NSString *requestPath = [[NSString alloc] initWithFormat:@"%@%@?&api-key=%@",APIBooksPath, category, APIKey];
+    NSLog(@"requestPath: %@",requestPath);
+    
+    [self setupLocalClientDatabaseForAPI:[NSURL URLWithString:APIBaseURL]];
     
 	[[RKObjectManager sharedManager]
      		getObjectsAtPath:requestPath
@@ -124,7 +128,6 @@
 
 - (void) updateDatabaseInventoryForItemsCategory:(NSString *) category success:(void (^)(void))successBlock failure:(void (^)(NSError * error))failureBlock
 {
-    [self setupLocalClientDatabase];
     [self requestDataForItemsCategory:category
         success:^()
         {
