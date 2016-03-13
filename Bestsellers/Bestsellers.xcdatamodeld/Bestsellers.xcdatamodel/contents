@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+    <entity name="Book" representedClassName="Book" syncable="YES">
+        <attribute name="author" attributeType="String" syncable="YES"/>
+        <attribute name="bookDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contributor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="primaryIsbn10" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryIsbn13" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publisher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rankLastWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="weeksOnList" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="BookList" representedClassName="BookList" syncable="YES">
+        <attribute name="bestsellersDate" attributeType="Date" syncable="YES"/>
+        <attribute name="displayName" attributeType="String" syncable="YES"/>
+        <attribute name="listName" attributeType="String" syncable="YES"/>
+        <attribute name="normalListEndsAt" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="publishedDate" attributeType="Date" syncable="YES"/>
+        <attribute name="updated" attributeType="String" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Book" positionX="-27" positionY="18" width="128" height="240"/>
+        <element name="BookList" positionX="18" positionY="63" width="128" height="150"/>
+    </elements>
+</model>
