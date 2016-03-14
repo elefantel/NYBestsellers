@@ -8,8 +8,6 @@
 
 #import <XCTest/XCTest.h>
 
-//#import "NYBestsellerAPIConnectionController.h"
-
 @interface BestsellersTests : XCTestCase
 
 @end
