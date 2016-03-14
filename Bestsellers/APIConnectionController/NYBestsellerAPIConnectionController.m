@@ -115,11 +115,13 @@
 		      parameters:nil
         		 success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult)
                             {
+                            //HTTP status 200:OK
                             RKLogInfo(@"Loading data from API successful.");
                             successBlock();
                         	}
         		  failure: ^(RKObjectRequestOperation *operation, NSError *error)
                             {
+                            //Log interpretation/description of HTTP error codes
                             RKLogError(@"Loading from API failed. %@", error.localizedDescription);
                             failureBlock(error);
                         	}
