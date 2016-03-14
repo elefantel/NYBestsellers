@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <RestKit/CoreData.h>
 #import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
 
 @interface NYBestsellerAPIConnectionController : NSObject
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;

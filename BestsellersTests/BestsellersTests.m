@@ -14,19 +14,57 @@
 
 @implementation BestsellersTests
 
-- (void)setUp {
+- (void)setUp
+{
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    NSMutableDictionary *APIConfig;
+    APIConfig = [[NSUserDefaults standardUserDefaults] objectForKey:@"APIConfig"];
+    
+    if (APIConfig == nil)
+    {
+        APIConfig = [[NSMutableDictionary alloc] init];
+        [APIConfig setObject: @"http://api.nytimes.com" forKey:@"APIBaseURL"];
+        [APIConfig setObject: @"ab68052fb3ea20655df09719804424c8:16:74623694" forKey:@"APIKey"];
+        [APIConfig setObject: @"/svc/books/v3/lists/" forKey:@"APIBooksExtension"];
+        [[NSUserDefaults standardUserDefaults] setObject:APIConfig forKey:@"APIConfig"];
+    }
 }
 
-- (void)tearDown {
+- (void)tearDown
+{
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testAPIBaseURLWorks
+{
+   NSMutableDictionary *APIConfig = [[NSUserDefaults standardUserDefaults] objectForKey:@"APIConfig"];
+   XCTAssert([[APIConfig objectForKey:@"APIBaseURL"] isEqualToString:@"http://api.nytimes.com"]);
+}
+
+- (void) testAPIKeyisValid
+{
+    NSMutableDictionary *APIConfig = [[NSUserDefaults standardUserDefaults] objectForKey:@"APIConfig"];
+   XCTAssert([[APIConfig objectForKey:@"APIKey"] isEqualToString:@"ab68052fb3ea20655df09719804424c8:16:74623694"]);
+}
+
+- (void)testClientCanConnectToAPI
+{
+    NSMutableDictionary * APIConfig = [[NSUserDefaults standardUserDefaults] objectForKey:@"APIConfig"];
+    NSString *baseURL = [APIConfig objectForKey:@"APIBaseURL"];
+    NSString *booksExtension = [APIConfig objectForKey:@"APIBooksExtension"];
+    NSString *APIKey = [APIConfig objectForKey:@"APIKey"];
+    NSString *booksCategory = @"business-books";
+    NSString *requestPath = [[NSString alloc] initWithFormat:@"%@%@%@?&api-key=%@",baseURL,booksExtension, booksCategory, APIKey];
+    
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestPath]];
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
+                                              returningResponse:&response
+                                                          error:&error];
+    XCTAssert(error == nil);
 }
 
 - (void)testPerformanceExample {
