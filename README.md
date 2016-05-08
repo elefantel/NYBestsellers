@@ -22,3 +22,6 @@ This app depends on the following open source libraries:
 4. **SOCKit** - A String <-> Object Coding for Objective-C that transform objects into strings and vice versa.
 
 5. **TransitionKit** - An Objective-C block based API for implementing State Machines.
+
+## Licence
+NYBestsellers is licensed under the terms of the <a href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a>. Please see LICENSE file for full details.
